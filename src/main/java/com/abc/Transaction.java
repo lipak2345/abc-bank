@@ -1,18 +1,20 @@
 package com.abc;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Immutable class to represent transaction.
  */
 public final class Transaction {
 
-    public UUID getTransactionId() {
+    public int getTransactionId() {
         return transactionId;
     }
 
-    private final UUID transactionId = UUID.randomUUID();
+    private int transactionId;
+
+    private static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
 
     //TODO: Convert to a proper money/currency handling class or at least use BigDecimal for amount
     private final double amount;
@@ -38,6 +40,7 @@ public final class Transaction {
     public Transaction(double amount, LocalDateTime date) {
         this.amount = amount;
         this.transactionDate = (date != null)? date: LocalDateTime.now();
+        transactionId = ID_GENERATOR.incrementAndGet();
     }
 
     public double getAmount() {

@@ -1,6 +1,12 @@
 package com.abc.account;
 
-public class MaxiSavingsAccount extends AbstractAccount{
+import com.abc.interest.MaxiSavingsInterest;
+
+public class MaxiSavingsAccount extends AccountBase {
+    public MaxiSavingsAccount() {
+        super(new MaxiSavingsInterest(), AccountType.MAXI_SAVINGS);
+    }
+
     @Override
     public double interestEarned() {
         double amount = sumTransactions();
@@ -12,7 +18,7 @@ public class MaxiSavingsAccount extends AbstractAccount{
     }
 
     @Override
-    public AbstractAccount.AccountType getAccountType() {
+    public AccountBase.AccountType getAccountType() {
         return AccountType.MAXI_SAVINGS;
     }
 }

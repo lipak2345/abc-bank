@@ -1,6 +1,12 @@
 package com.abc.account;
 
-public class SavingsAccount extends AbstractAccount {
+import com.abc.interest.SavingsInterest;
+
+public class SavingsAccount extends AccountBase {
+
+    public SavingsAccount() {
+        super(new SavingsInterest(), AccountType.SAVINGS);
+    }
 
     @Override
     public double interestEarned() {
@@ -12,7 +18,7 @@ public class SavingsAccount extends AbstractAccount {
     }
 
     @Override
-    public AbstractAccount.AccountType getAccountType() {
+    public AccountBase.AccountType getAccountType() {
         return AccountType.SAVINGS;
     }
 }

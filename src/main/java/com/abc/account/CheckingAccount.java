@@ -1,7 +1,14 @@
 package com.abc.account;
 
 
-public class CheckingAccount extends AbstractAccount {
+import com.abc.interest.CheckingInterest;
+
+public class CheckingAccount extends AccountBase {
+
+    public CheckingAccount() {
+        super(new CheckingInterest(), AccountType.CHECKING);
+    }
+
     @Override
     public double interestEarned() {
         double amount = sumTransactions();

@@ -1,24 +1,21 @@
 package com.abc;
 
-import com.abc.account.AbstractAccount;
+import com.abc.account.AccountBase;
 import com.abc.account.CheckingAccount;
 import com.abc.account.MaxiSavingsAccount;
 import com.abc.account.SavingsAccount;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CustomerTest {
+    private static final double EPSILON = 1e-15;
 
     @Test //Test customer statement generation
     public void testApp(){
-
-//        Account checkingAccount = new Account(Account.CHECKING);
-//        Account savingsAccount = new Account(Account.SAVINGS);
-
-        AbstractAccount checkingAccount = new CheckingAccount();
-        AbstractAccount savingsAccount = new SavingsAccount();
+        AccountBase checkingAccount = new CheckingAccount();
+        AccountBase savingsAccount = new SavingsAccount();
 
         Customer henry = new Customer("Henry").openAccount(checkingAccount).openAccount(savingsAccount);
 
@@ -60,5 +57,40 @@ public class CustomerTest {
                 .openAccount(new SavingsAccount());
         oscar.openAccount(new CheckingAccount()).openAccount(new MaxiSavingsAccount());
         assertEquals(3, oscar.getNumberOfAccounts());
+    }
+
+    @Test
+    public void testOpenAccount() throws Exception {
+
+    }
+
+    @Test
+    public void testTotalInterestEarned() throws Exception {
+        AccountBase checkingAccount = new CheckingAccount();
+        AccountBase savingsAccount = new SavingsAccount();
+
+        Customer henry = new Customer("Henry").openAccount(checkingAccount).openAccount(savingsAccount);
+
+        checkingAccount.deposit(100.0);
+        savingsAccount.deposit(4000.0);
+        savingsAccount.withdraw(200.0);
+
+        assertEquals(6.7, henry.totalInterestEarned(), EPSILON);
+    }
+
+    @Test
+    public void testTransfer() throws Exception {
+        AccountBase checkingAccount = new CheckingAccount();
+        AccountBase savingsAccount = new SavingsAccount();
+
+        Customer henry = new Customer("Henry").openAccount(checkingAccount).openAccount(savingsAccount);
+
+        checkingAccount.deposit(500.0);
+        savingsAccount.deposit(4200.0);
+        savingsAccount.withdraw(200.0);
+
+        henry.transfer(savingsAccount, checkingAccount, 100);
+        assertTrue(checkingAccount.sumTransactions() == 600.0
+                && savingsAccount.sumTransactions() == 3900);
     }
 }

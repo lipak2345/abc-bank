@@ -1,20 +1,25 @@
 package com.abc;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 public class Bank {
     private List<Customer> customers;
 
     public Bank() {
-        customers = new ArrayList<Customer>();
+        customers = new ArrayList<>();
     }
 
     public void addCustomer(Customer customer) {
+        if (customer == null) {
+            throw new IllegalArgumentException("Cannot add null customer");
+        }
         customers.add(customer);
     }
 
     public String customerSummary() {
+        //TODO: Refactor to return a CustomerSummary object which will be easy to work/test.
         StringBuilder custBuilder = new StringBuilder("Customer Summary");
 
         for (Customer c : customers) {
@@ -30,6 +35,9 @@ public class Bank {
     //Make sure correct plural of word is created based on the number passed in:
     //If number passed in is 1 just return the word otherwise add an 's' at the end
     private String format(int number, String word) {
+        if (word == null) {
+            throw new IllegalArgumentException("Argument word cannot be null");
+        }
         return number + " " + (number == 1 ? word : word + "s");
     }
 
@@ -41,7 +49,7 @@ public class Bank {
     }
 
     public String getFirstCustomer() {
-        Customer firstCustomer = customers.get(0);
+        Customer firstCustomer = (customers.size() > 0) ? customers.get(0) : null;
         return (firstCustomer != null)? firstCustomer.getName(): null;
     }
 }

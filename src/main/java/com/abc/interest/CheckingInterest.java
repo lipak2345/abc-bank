@@ -1,7 +1,6 @@
 package com.abc.interest;
 
 import com.abc.Transaction;
-import com.abc.account.AccountBase;
 
 import java.util.SortedSet;
 

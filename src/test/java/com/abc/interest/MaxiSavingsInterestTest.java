@@ -2,7 +2,6 @@ package com.abc.interest;
 
 import com.abc.account.AccountBase;
 import com.abc.account.MaxiSavingsAccount;
-
 import org.junit.Test;
 
 import java.time.LocalDateTime;
